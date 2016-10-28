@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf8'>
+    <title>数据格式转换器</title>
+    <script src='config-format.js'></script>
+    <script>
+function run() {
+    var config = JSON.parse('{' + document.getElementById('config').value + '}');
+    var data = JSON.parse(document.getElementById('input').value);
+    document.getElementById('output').value = format(data, config);
+}
+    </script>
+  </head>
+  <body>
+    将<a href="http://login.jr.moefantasy.com/index/getInitConfigs" target="_blank">配置文件</a>的内容复制到左边输入框后点击:
+    <button onclick="run();">转换</button><br><br>
+    <textarea id="input" style="width:40%; height:60vh;"></textarea>
+    <textarea id="output" style="width:40%; height:60vh;"></textarea>
+    <br><p>配置:</p>
+    <textarea id="config" rows="7" style="width:70%;">
+"remodelPostfix": "·改",
+"cannotEquip": "不可装备",
+"noEquipt": "无",
+"countryName": [ "", "日本", "德国", "英国", "美国", "意大利", "法国", "苏联", "中国", "???" ],
+"dialogueTitle": [ "获得", "白天", "夜间", "阵型", "攻击", "夜战", "中破", "誓约", "简介" ],
+"modCore": { "10441":"驱逐", "10341":"巡洋", "10241":"战列", "10141":"航母", "10541":"潜艇" },
+"rangeName": [ "", "短", "中", "长", "超长" ]</textarea>
+    </textarea>
+  </body>
+</html>

@@ -120,8 +120,9 @@ function getShipAttr(ship) {
 }
 
 function formatDialogue(ship, title, str) {
+    if (!str) return '';
     str = str.trim();
-    if (!str || str == '0') return '';
+    if (str == '' || str == '0') return '';
     var ret = '';
     for (var i = 0; i < str.length; i++) {
         if (str[i] == "'") {

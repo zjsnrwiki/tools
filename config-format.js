@@ -119,9 +119,9 @@ function getShipAttr(ship) {
     return ret.slice(0, -2) + '\n}\n';
 }
 
-function formatDialogue(str) {
+function formatDialogue(ship, title, str) {
     str = str.trim();
-    if (str == '0') return '';
+    if (!str || str == '0') return '';
     var ret = '';
     for (var i = 0; i < str.length; i++) {
         if (str[i] == "'") {
@@ -134,33 +134,29 @@ function formatDialogue(str) {
             ret += str[i];
         }
     }
-    return ret;
+    return "ships['" + ship + "']['" + title + "'] = '" + ret + "'\n'";
 }
 
 function getDialogue(ship) {
     var name = getShipName(ship);
     var t = dialogueTitle;
-    var ret = "ships['" + name + "']['" + t[0] + "'] = '" + formatDialogue(ship.getDialogue) + "'\n";
-    if (ship.mainDialogue && ship.mainDialogue[0]) {
-        ret += "ships['" + name + "']['" + t[1] + "1'] = '" + formatDialogue(ship.mainDialogue[0]) + "'\n";
-        ret += "ships['" + name + "']['" + t[1] + "2'] = '" + formatDialogue(ship.mainDialogue[1]) + "'\n";
-        ret += "ships['" + name + "']['" + t[1] + "3'] = '" + formatDialogue(ship.mainDialogue[2]) + "'\n";
+    var ret = formatDialogue(name, t[0], ship.getDialogue);
+    if (ship.mainDialogue) {
+        ret += formatDialogue(name, t[1] + '1', ship.mainDialogue[0]);
+        ret += formatDialogue(name, t[1] + '2', ship.mainDialogue[1]);
+        ret += formatDialogue(name, t[1] + '3', ship.mainDialogue[2]);
     }
     if (ship.mainDialogue && ship.mainDialogue[6] != ship.mainDialogue[0]) {
-        ret += "ships['" + name + "']['" + t[2] + "1'] = '" + formatDialogue(ship.mainDialogue[6]) + "'\n";
-        ret += "ships['" + name + "']['" + t[2] + "2'] = '" + formatDialogue(ship.mainDialogue[7]) + "'\n";
-        ret += "ships['" + name + "']['" + t[2] + "3'] = '" + formatDialogue(ship.mainDialogue[8]) + "'\n";
+        ret += formatDialogue(name, t[2] + '1', ship.mainDialogue[6]);
+        ret += formatDialogue(name, t[2] + '2', ship.mainDialogue[7]);
+        ret += formatDialogue(name, t[2] + '3', ship.mainDialogue[8]);
     }
-    if (ship.formationDialogue)
-        ret += "ships['" + name + "']['" + t[3] + "'] = '" + formatDialogue(ship.formationDialogue) + "'\n";
-    if (ship.atkDialogue)
-        ret += "ships['" + name + "']['" + t[4] + "'] = '" + formatDialogue(ship.atkDialogue) + "'\n";
-    if (ship.nightAtkDialogue)
-        ret += "ships['" + name + "']['" + t[5] + "'] = '" + formatDialogue(ship.nightAtkDialogue) + "'\n";
-    if (ship.breakDialogue)
-        ret += "ships['" + name + "']['" + t[6] + "'] = '" + formatDialogue(ship.breakDialogue) + "'\n";
-    ret += "ships['" + name + "']['" + t[7] + "'] = '" + formatDialogue(ship.vow) + "'\n";
-    ret += "ships['" + name + "']['" + t[8] + "'] = '" + formatDialogue(ship.desc) + "'\n";
+    ret += formatDialogue(name, t[3], ship.formationDialogue);
+    ret += formatDialogue(name, t[4], ship.atkDialogue);
+    ret += formatDialogue(name, t[5], ship.nightAtkDialogue);
+    ret += formatDialogue(name, t[6], ship.breakDialogue);
+    ret += formatDialogue(name, t[7], ship.vow);
+    ret += formatDialogue(name, t[8], ship.desc);
 
     return ret;
 }

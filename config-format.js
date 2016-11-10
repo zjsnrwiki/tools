@@ -121,6 +121,7 @@ function getShipAttr(ship) {
 
 function formatDialogue(str) {
     str = str.trim();
+    if (str == '0') return '';
     var ret = '';
     for (var i = 0; i < str.length; i++) {
         if (str[i] == "'") {

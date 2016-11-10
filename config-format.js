@@ -28,7 +28,7 @@ function getShipAttr(ship) {
 
     ret += "type='" + shipType[ship.type] + "', ";
     ret += "country='" + countryName[parseInt(ship.country)] + "', ";
-    ret += "class='" + ship.classNo + "', ";
+    ret += "class='" + ship.classNo.trim() + "', ";
 
     if (ship.skills.length > 0)
         ret += "skill='" + skillsByTypeId[ship.skills[0]][0].title + "', ";
@@ -135,7 +135,7 @@ function formatDialogue(ship, title, str) {
             ret += str[i];
         }
     }
-    return "ships['" + ship + "']['" + title + "'] = '" + ret + "'\n'";
+    return "ships['" + ship + "']['" + title + "'] = '" + ret + "'\n";
 }
 
 function getDialogue(ship) {
